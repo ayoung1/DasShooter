@@ -13,6 +13,8 @@ public class Player : NetworkBehaviour {
         protected set { _isDead = value; }
     }
     [SerializeField]
+    private GameObject model;
+    [SerializeField]
     private GameObject spawnEffect;
     [SerializeField]
     private GameObject deathEffect;
@@ -63,22 +65,20 @@ public class Player : NetworkBehaviour {
             {
                 wasEnabled[i] = disableOnDeath[i].enabled;
             }
-            Renderer r = GetComponent<Renderer>();
-            if (r != null)
+            Renderer r = model.GetComponent<Renderer>();
+            if (GameManager.teamSwap)
             {
-                if (GameManager.teamSwap)
-                {
-                    SetTeam(0);
-                    r.material = GameManager.instance.teamOne;
-                }
-                else
-                {
-
-                    SetTeam(1);
-                    r.material = GameManager.instance.teamTwo;
-                }
-                GameManager.teamSwap = !GameManager.teamSwap;
+                SetTeam(0);
+                r.material = GameManager.instance.teamOne;
+                Debug.Log("Setting team 1");
             }
+            else
+            {
+                SetTeam(1);
+                r.material = GameManager.instance.teamTwo;
+                Debug.Log("Setting Team 2");
+            }
+            GameManager.teamSwap = !GameManager.teamSwap;
             isFirstSetup = !isFirstSetup;
         }
         SetDefaults();

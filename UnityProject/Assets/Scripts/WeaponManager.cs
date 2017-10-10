@@ -63,16 +63,6 @@ public class WeaponManager : NetworkBehaviour {
         isReloading = false;
     }
 
-    public void PlayReloadSound()
-    {
-        GetComponent<AudioSource>().PlayOneShot(currentWeapon.reloadAudio);
-    }
-
-    public void PlayFireSound()
-    {
-        GetComponent<AudioSource>().PlayOneShot(currentWeapon.shootAudio);
-    }
-
     [Command]
     void CmdOnReload()
     {
@@ -87,17 +77,10 @@ public class WeaponManager : NetworkBehaviour {
         {
             ani.SetTrigger("Reload");
         }
-        PlayReloadSound();
+        GetComponent<AudioSource>().PlayOneShot(currentWeapon.reloadAudio);
     }
-
-    [Command]
-    public void CmdZoom(bool zoom)
-    {
-        RpcOnZoom(zoom);
-    }
-
-    [ClientRpc]
-    void RpcOnZoom(bool zoom)
+    
+    public void OnZoom(bool zoom)
     {
         Animator ani = currentGraphics.GetComponent<Animator>();
         if (ani != null)

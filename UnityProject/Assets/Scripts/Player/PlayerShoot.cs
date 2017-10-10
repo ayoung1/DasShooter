@@ -7,6 +7,7 @@ public class PlayerShoot : NetworkBehaviour {
 
     private const string PLAYER_TAG = "Player";
 
+    private AudioPoolManager audioPool;
     private PlayerWeapon currentWeapon;
     [SerializeField]
     private Camera cam;
@@ -24,6 +25,7 @@ public class PlayerShoot : NetworkBehaviour {
             Debug.Log("No camera in player shoot");
             this.enabled = false;
         }
+        audioPool = new AudioPoolManager();
         weaponManager = GetComponent<WeaponManager>();
     }
 
@@ -39,17 +41,17 @@ public class PlayerShoot : NetworkBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Fire2") && !PauseMenu.IsOn && !isZoomed)
+        if (Input.GetButtonDown("Fire2") && !isZoomed)
         {
             isZoomed = !isZoomed;
             zoomCamera.fieldOfView = zoomCamera.fieldOfView - currentWeapon.zoom;
-            weaponManager.CmdZoom(isZoomed);
+            weaponManager.OnZoom(isZoomed);
         }
-        else if((Input.GetButtonUp("Fire2") && isZoomed) || (weaponManager.isReloading && isZoomed))
+        else if(Input.GetButtonUp("Fire2") && isZoomed)
         {
             isZoomed = !isZoomed;
             zoomCamera.fieldOfView = zoomCamera.fieldOfView + currentWeapon.zoom;
-            weaponManager.CmdZoom(isZoomed);
+            weaponManager.OnZoom(isZoomed);
         }
 
         if (Input.GetButtonDown("Fire1") && !PauseMenu.IsOn)
@@ -90,6 +92,7 @@ public class PlayerShoot : NetworkBehaviour {
     void RpcOnShootEffect()
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+        weaponManager.GetComponent<AudioSource>().PlayOneShot(currentWeapon.shootAudio);
     }
 
     [Client]
@@ -103,7 +106,6 @@ public class PlayerShoot : NetworkBehaviour {
             return;
         }
         --currentWeapon.bullets;
-        weaponManager.PlayFireSound();
         CmdOnShoot();
         RaycastHit _hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, currentWeapon.range, mask))
