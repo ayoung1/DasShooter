@@ -129,13 +129,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1504643382673624}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2, y: -0.25, z: 0.65}
-  m_LocalScale: {x: 0.4405803, y: 0.44058082, z: 0.44058082}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4529335179161506}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4406530842121866
 Transform:
   m_ObjectHideFlags: 1
@@ -529,6 +529,9 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 0
   jointSpring: 20
   jointMaxForce: 40
 --- !u!114 &114734344959759488
@@ -542,19 +545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a68f93fdbd33b4ca7ce5958ed46ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryWeapon:
-    bullets: 20
-    name: ScifiAuto
-    damage: 13
-    maxBullets: 20
-    reloadSpeed: 1.2
-    range: 150
-    fireRate: 9.7
-    recoil: 0.2
-    zoom: 35
-    shootAudio: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
-    reloadAudio: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
-    graphics: {fileID: 1569956230239620, guid: e7041aebcd10eeb408724be845265751, type: 2}
+  primaryWeapon: {fileID: 114030453989837026, guid: cf07e192ce704124d8b092e725a32a74,
+    type: 2}
   weaponLayerName: Weapon
   weaponHolder: {fileID: 4186945640546760}
   isReloading: 0
@@ -577,6 +569,9 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 4096
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 8192
   jointSpring: 20
   jointMaxForce: 40
 --- !u!114 &114750930347024022

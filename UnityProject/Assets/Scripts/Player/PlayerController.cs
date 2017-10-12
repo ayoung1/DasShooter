@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private LayerMask environmentMask;
+    [SerializeField]
+    private LayerMask interactableMask;
 
     [Header("Spring Settings:")]
     [SerializeField]
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour {
             thrusterFuelAmount = Mathf.Clamp(thrusterFuelAmount, 0f, 1f);
             return;
         }
+        Interact();
         RaycastHit _hit;
         if(Physics.Raycast(transform.position, Vector3.down, out _hit, 100f, environmentMask))
         {
@@ -102,6 +105,21 @@ public class PlayerController : MonoBehaviour {
         motor.RotateCamera(_cameraRotation);
         motor.Rotate(_rotation);
         motor.ApplyThruster(_thrusterForce);
+    }
+
+    private void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        { 
+            RaycastHit _hit;
+            Debug.Log("Trying to Interact");
+            if (Physics.Raycast(transform.position, transform.forward, out _hit, 10f, interactableMask))
+            {
+                IInteractable obj = _hit.transform.gameObject.GetComponent<IInteractable>();
+                obj.Interact(gameObject);
+                Debug.Log("IOver");
+            }
+        }
     }
 
     private void SetJointSettings(float _jointSpring)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
 [RequireComponent(typeof(WeaponManager))]
 [RequireComponent(typeof(Player))]
@@ -7,7 +8,7 @@ public class PlayerShoot : NetworkBehaviour {
 
     private const string PLAYER_TAG = "Player";
 
-    private AudioPoolManager audioPool;
+    private IEnumerator coChangeFoV;
     private PlayerWeapon currentWeapon;
     [SerializeField]
     private Camera cam;
@@ -17,6 +18,7 @@ public class PlayerShoot : NetworkBehaviour {
     private bool isZoomed = false;
     [SerializeField]
     private Camera zoomCamera;
+    private float oFoV;
 
     void Start()
     {
@@ -25,8 +27,8 @@ public class PlayerShoot : NetworkBehaviour {
             Debug.Log("No camera in player shoot");
             this.enabled = false;
         }
-        audioPool = new AudioPoolManager();
         weaponManager = GetComponent<WeaponManager>();
+        oFoV = zoomCamera.fieldOfView;
     }
 
     void Update()
@@ -44,14 +46,12 @@ public class PlayerShoot : NetworkBehaviour {
         if (Input.GetButtonDown("Fire2") && !isZoomed)
         {
             isZoomed = !isZoomed;
-            zoomCamera.fieldOfView = zoomCamera.fieldOfView - currentWeapon.zoom;
-            weaponManager.OnZoom(isZoomed);
+            ChangeFoV(0.5f, oFoV - currentWeapon.zoom);
         }
         else if(Input.GetButtonUp("Fire2") && isZoomed)
         {
             isZoomed = !isZoomed;
-            zoomCamera.fieldOfView = zoomCamera.fieldOfView + currentWeapon.zoom;
-            weaponManager.OnZoom(isZoomed);
+            ChangeFoV(0.5f, oFoV);
         }
 
         if (Input.GetButtonDown("Fire1") && !PauseMenu.IsOn)
@@ -59,7 +59,7 @@ public class PlayerShoot : NetworkBehaviour {
             if (currentWeapon.fireRate == 0)
                 Shoot();
             else if(currentWeapon.fireRate > 0)
-                InvokeRepeating("Shoot", 0f, 1f / currentWeapon.fireRate);
+                InvokeRepeating("Shoot", 0f, 60f / currentWeapon.fireRate);
         }
         else if (Input.GetButtonUp("Fire1") || PauseMenu.IsOn)
         {
@@ -125,5 +125,28 @@ public class PlayerShoot : NetworkBehaviour {
         Debug.Log(_playerId + " has been shot");
         Player _player = GameManager.GetPlayer(_playerId);
         _player.RpcTakeDamage(_damage);
+    }
+
+    public void ChangeFoV(float duration, float value)
+    {
+        if (coChangeFoV != null)
+        {
+            StopCoroutine(coChangeFoV);
+        }
+        coChangeFoV = CoChangeFoV(duration, value);
+        StartCoroutine(coChangeFoV);
+    }
+
+    IEnumerator CoChangeFoV(float duration, float value)
+    {
+        float t = 0.0f;
+        float startFoV = zoomCamera.fieldOfView;
+        while (t != duration)
+        {
+            t += Time.deltaTime;
+            if (t > duration) t = duration;
+            zoomCamera.fieldOfView = Mathf.Lerp(startFoV, value, t / duration);
+            yield return null;
+        }
     }
 }

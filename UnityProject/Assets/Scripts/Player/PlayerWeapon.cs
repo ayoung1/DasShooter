@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class PlayerWeapon {
+public class PlayerWeapon : MonoBehaviour{
 
     [HideInInspector]
     public int bullets;
 
-    public string name = "MP#";
+    public string wName = "MP#";
     public int damage = 10;
     public int maxBullets = 20;
     public float reloadSpeed = 1.2f;

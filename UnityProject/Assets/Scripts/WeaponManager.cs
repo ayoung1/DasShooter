@@ -13,6 +13,7 @@ public class WeaponManager : NetworkBehaviour {
     private Transform weaponHolder;
     private PlayerWeapon currentWeapon;
     private WeaponGraphics currentGraphics;
+    private GameObject weaponObj;
     public bool isReloading = false;
 
     public PlayerWeapon GetCurrentWeapon()
@@ -30,19 +31,21 @@ public class WeaponManager : NetworkBehaviour {
         EquipWeapon(primaryWeapon);
 	}
 
-    void EquipWeapon(PlayerWeapon _weapon)
+    public void EquipWeapon(PlayerWeapon _weapon)
     {
+        if (currentWeapon != null)
+            Destroy(weaponObj);
         currentWeapon = _weapon;
-        GameObject _weaponIns = (GameObject)Instantiate(_weapon.graphics, weaponHolder.position, weaponHolder.rotation);
-        _weaponIns.transform.SetParent(weaponHolder);
+        weaponObj = (GameObject)Instantiate(_weapon.graphics, weaponHolder.position, weaponHolder.rotation * Quaternion.Euler(90,0,0));
+        weaponObj.transform.SetParent(weaponHolder);
 
-        currentGraphics = _weaponIns.GetComponent<WeaponGraphics>();
+        currentGraphics = weaponObj.GetComponent<WeaponGraphics>();
         if (currentGraphics == null)
-            Debug.Log("No Graphics Found For Weapon " + _weaponIns.name);
+            Debug.Log("No Graphics Found For Weapon " + weaponObj.name);
 
         if (isLocalPlayer)
         {
-            Util.SetLayerRecursively(_weaponIns, LayerMask.NameToLayer(weaponLayerName));
+            Util.SetLayerRecursively(weaponObj, LayerMask.NameToLayer(weaponLayerName));
 
         }
     }
