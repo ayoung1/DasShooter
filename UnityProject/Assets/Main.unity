@@ -304,7 +304,7 @@ Prefab:
         type: 2}
       propertyPath: playerWeapon
       value: 
-      objectReference: {fileID: 114830983350054708, guid: e7041aebcd10eeb408724be845265751,
+      objectReference: {fileID: 114030453989837026, guid: cf07e192ce704124d8b092e725a32a74,
         type: 2}
     - target: {fileID: 1821993782919644, guid: 446cae046da6e96409b7e229288b3bca, type: 2}
       propertyPath: m_Name
