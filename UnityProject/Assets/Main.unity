@@ -2560,7 +2560,7 @@ MonoBehaviour:
   m_OfflineScene: Lobby
   m_OnlineScene: Main
   m_SpawnPrefabs:
-  - {fileID: 0}
+  - {fileID: 1114052756653398, guid: 0c02314d566092046a4384188b3b7e15, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

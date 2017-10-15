@@ -86,6 +86,15 @@ public class PlayerShoot : NetworkBehaviour {
     void CmdOnShoot()
     {
         RpcOnShootEffect();
+        GameObject bullet = Instantiate(weaponManager.projectile, weaponManager.GetCurrentWeapon().firePoint.transform.position, Quaternion.identity);
+        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
+        Destroy(bullet, Bullet.TTL);
+        if (isLocalPlayer)
+        {
+            Bullet bobj = bullet.GetComponent<Bullet>();
+            bobj.weapon = weaponManager.GetCurrentWeapon();
+        }
+        NetworkServer.Spawn(bullet);
     }
 
     [ClientRpc]
@@ -107,6 +116,7 @@ public class PlayerShoot : NetworkBehaviour {
         }
         --currentWeapon.bullets;
         CmdOnShoot();
+        return;
         RaycastHit _hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, currentWeapon.range, mask))
         {

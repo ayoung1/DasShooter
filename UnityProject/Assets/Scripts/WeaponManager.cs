@@ -6,6 +6,8 @@ using System.Collections;
 public class WeaponManager : NetworkBehaviour {
 
     [SerializeField]
+    public GameObject projectile;
+    [SerializeField]
     private PlayerWeapon primaryWeapon;
     [SerializeField]
     private string weaponLayerName = "Weapon";

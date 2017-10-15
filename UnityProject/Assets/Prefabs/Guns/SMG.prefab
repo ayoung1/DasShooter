@@ -242,9 +242,11 @@ MonoBehaviour:
   fireRate: 950
   recoil: 0.2
   zoom: 25
+  bulletVelocity: 1000
   shootAudio: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
   reloadAudio: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
   graphics: {fileID: 1096636345312066}
+  firePoint: {fileID: 1008337315397078}
 --- !u!114 &114679921225206360
 MonoBehaviour:
   m_ObjectHideFlags: 1

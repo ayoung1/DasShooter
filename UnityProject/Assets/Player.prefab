@@ -545,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a68f93fdbd33b4ca7ce5958ed46ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 1114052756653398, guid: 0c02314d566092046a4384188b3b7e15, type: 2}
   primaryWeapon: {fileID: 114030453989837026, guid: cf07e192ce704124d8b092e725a32a74,
     type: 2}
   weaponLayerName: Weapon

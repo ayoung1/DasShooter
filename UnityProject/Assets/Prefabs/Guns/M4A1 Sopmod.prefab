@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bef8ca6026bbb34782c659e9202dbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullets: 20
+  bullets: 4
   wName: M4A1
   damage: 12
   maxBullets: 20
@@ -381,9 +381,11 @@ MonoBehaviour:
   fireRate: 0
   recoil: 0.2
   zoom: 50
+  bulletVelocity: 1000
   shootAudio: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
   reloadAudio: {fileID: 8300000, guid: 3c5c1d4d7b9307c458890a4beb12e4ae, type: 3}
   graphics: {fileID: 1813454451035710}
+  firePoint: {fileID: 1391698653245002}
 --- !u!114 &114306075883201644
 MonoBehaviour:
   m_ObjectHideFlags: 1

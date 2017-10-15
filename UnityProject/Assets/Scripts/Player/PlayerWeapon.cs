@@ -13,9 +13,11 @@ public class PlayerWeapon : MonoBehaviour{
     public float fireRate = 0f;
     public float recoil = .2f;
     public float zoom = 10f;
+    public float bulletVelocity = 1000f;
     public AudioClip shootAudio;
     public AudioClip reloadAudio;
     public GameObject graphics;
+    public GameObject firePoint;
 
     public PlayerWeapon()
     {
